@@ -65,7 +65,7 @@ namespace hum_webapi.Rules
                 using (var context = new HumDataContext())
                 {
                     TaskItem task = null;
-                    if (savetask.Id >= 0)
+                    if (savetask.Id > 0)
                     {
                         task = context.TaskItem.Where(t => t.Id == savetask.Id).FirstOrDefault();
                         if (task == null)

@@ -10,7 +10,7 @@ namespace hum_webapi.DomainObjects
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=hum.db");
+            optionsBuilder.UseSqlite("Data Source=../hum.db");
         }
     }
 }
