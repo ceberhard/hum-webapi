@@ -10,6 +10,6 @@ namespace hum_webapi.DTOs
         public string Status {get;set;}
 
         [DataMember(Order = 2, Name = "dttm")]
-        public DateTime HistoryDate {get;set;}
+        public string HistoryDate {get;set;}
     }
 }

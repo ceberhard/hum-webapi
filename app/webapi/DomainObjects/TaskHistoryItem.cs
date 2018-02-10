@@ -40,7 +40,7 @@ namespace hum_webapi.DomainObjects
             return new TaskHistoryItemDTO
             {
                 Status = this.TaskStatus.ToString(),
-                HistoryDate = this.StatusDate
+                HistoryDate = this.StatusDate.ToString()
             };
         }
     }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using hum_webapi.DTOs;
 using hum_webapi.Rules;
+using hum_webapi.DomainObjects;
 
 namespace hum_webapi.Controllers
 {
@@ -12,10 +13,10 @@ namespace hum_webapi.Controllers
     {
         [HttpGet]
         [Route("api/task")]
-        public IEnumerable<TaskItemDTO> GetTasks()
+        public IActionResult GetTasks()
         {
             var svc = new TaskService();
-            return svc.GetTaskItems();
+            return Ok(svc.GetTaskItems());
         }
 
         [HttpGet]
@@ -23,7 +24,7 @@ namespace hum_webapi.Controllers
         public IActionResult GetTask(int taskid)
         {
             var svc = new TaskService();
-            return new ObjectResult(svc.GetTaskItem(taskid));
+            return Ok(svc.GetTaskItem(taskid));
         }
 
         [HttpPut]
@@ -31,7 +32,21 @@ namespace hum_webapi.Controllers
         public IActionResult SaveTask([FromBody] TaskItemDTO savetask)
         {
             var svc = new TaskService();
-            return new ObjectResult(svc.SaveTask(savetask));
+            return Ok(svc.SaveTask(savetask));
+        }
+
+        [HttpPut]
+        [Route("api/task/{taskid}/{taskstatus}")]
+        public IActionResult UpdateTaskStatus(int taskid, string taskstatus)
+        {
+            DomainObjects.TaskStatus status;
+            if (Enum.TryParse(taskstatus.ToUpper(), out status))
+            {
+                var svc = new TaskService();
+                return Ok(svc.UpdateTaskStatus(taskid, status));
+            }
+            else
+                return StatusCode(500, new { message = $"Invalid Status: {taskstatus.ToUpper()}" });
         }
 
         [HttpDelete]
@@ -41,9 +56,9 @@ namespace hum_webapi.Controllers
             var svc = new TaskService();
             bool success = svc.DeleteTaskItem(taskid);
             if (success)
-                return new ObjectResult(new { message = $"Task Deleted: {taskid}" });
+                return Ok(new { message = $"Task Deleted: {taskid}" });
             else
-                return new ObjectResult(new { message = "Task Delete Failed" });
+                return StatusCode(500, new { message = "Task Delete Failed" });
         }
     }
 }
