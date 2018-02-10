@@ -32,7 +32,6 @@ namespace hum_webapi.Controllers
         {
             var svc = new TaskService();
             return new ObjectResult(svc.SaveTask(savetask));
-            //return new ObjectResult(savetask);
         }
 
         [HttpDelete]

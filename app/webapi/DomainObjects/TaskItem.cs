@@ -1,6 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
+using System.Linq;
 using hum_webapi.DTOs;
 
 namespace hum_webapi.DomainObjects
@@ -21,16 +23,20 @@ namespace hum_webapi.DomainObjects
         [StringLength(1000)]
         public string Description {get;set;}
 
+        public ICollection<TaskHistoryItem> TaskHistory { get;set; }
+
         public TaskItemDTO ExportDTO()
         {
             return new TaskItemDTO
             {
                 Id = this.Id,
                 Title = this.Title,
-                Description = this.Description
+                Description = this.Description,
+                History = this.TaskHistory
+                    .OrderBy(x => x.StatusDate)
+                    .Select(x => x.ExportDTO())
+                    .ToArray()
             };
         }
     }
-
-    
 }
