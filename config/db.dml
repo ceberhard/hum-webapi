@@ -1,5 +1,0 @@
-
-insert into task_status (id, status) values (1, 'BACKLOG');
-insert into task_status (id, status) values (2, 'WIP');
-insert into task_status (id, status) values (3, 'QA');
-insert into task_status (id, status) values (4, 'COMPLETE');
