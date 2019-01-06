@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/app/webapi/bin/Debug/netcoreapp2.0/hum-webapi.dll",
+            "program": "${workspaceFolder}/app/webapi/bin/Debug/netcoreapp2.2/hum-webapi.dll",
             "args": [],
             "cwd": "${workspaceFolder}/app/webapi",
             "stopAtEntry": false,
