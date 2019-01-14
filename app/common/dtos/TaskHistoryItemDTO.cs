@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace hum_webapi.DTOs
+namespace Hum.Common.DTOs
 {
     [DataContract]
     public class TaskHistoryItemDTO

@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
 using System.Linq;
-using hum_webapi.DTOs;
+using Hum.Common.DTOs;
 
-namespace hum_webapi.DomainObjects
+namespace Hum.Modules.DomainObjects
 {
     [Table("task_item")]
     public class TaskItem

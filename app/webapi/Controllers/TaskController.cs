@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using hum_webapi.DTOs;
-using hum_webapi.Rules;
-using hum_webapi.DomainObjects;
+using Hum.Common.DTOs;
+using Hum.Modules.Rules;
 
-namespace hum_webapi.Controllers
+namespace Hum.WebAPI.Controllers
 {
     public class TaskController : Controller
     {
@@ -39,14 +38,15 @@ namespace hum_webapi.Controllers
         [Route("api/task/{taskid}/{taskstatus}")]
         public IActionResult UpdateTaskStatus(int taskid, string taskstatus)
         {
-            DomainObjects.TaskStatus status;
-            if (Enum.TryParse(taskstatus.ToUpper(), out status))
-            {
-                var svc = new TaskService();
-                return Ok(svc.UpdateTaskStatus(taskid, status));
-            }
-            else
-                return StatusCode(500, new { message = $"Invalid Status: {taskstatus.ToUpper()}" });
+            // DomainObjects.TaskStatus status;
+            // if (Enum.TryParse(taskstatus.ToUpper(), out status))
+            // {
+            //     var svc = new TaskService();
+            //     return Ok(svc.UpdateTaskStatus(taskid, status));
+            // }
+            // else
+            //     return StatusCode(500, new { message = $"Invalid Status: {taskstatus.ToUpper()}" });
+            return Ok();
         }
 
         [HttpDelete]

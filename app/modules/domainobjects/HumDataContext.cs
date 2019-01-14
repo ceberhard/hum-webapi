@@ -2,7 +2,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-namespace hum_webapi.DomainObjects
+namespace Hum.Modules.DomainObjects
 {
     public class HumDataContext : DbContext
     {

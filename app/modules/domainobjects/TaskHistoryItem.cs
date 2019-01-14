@@ -1,9 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using hum_webapi.DTOs;
+using Hum.Common.DTOs;
 
-namespace hum_webapi.DomainObjects
+namespace Hum.Modules.DomainObjects
 {
     public enum TaskStatus
     {
