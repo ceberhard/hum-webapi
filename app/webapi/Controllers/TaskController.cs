@@ -30,7 +30,7 @@ namespace Hum.WebAPI.Controllers
         [Route("api/task")]
         public async Task<IActionResult> SaveTask([FromBody] TaskItemDTO savetask)
         {
-            throw new Exception("Chris Test");
+            throw new HumAppError(HumAppErrorType.Validation, "Chris Test Validation");
 
             // return Ok(base.TaskService.SaveTask(savetask));
             return Ok();

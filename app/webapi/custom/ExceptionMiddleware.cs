@@ -1,7 +1,9 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using Hum.Common.Utility;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace Hum.WebAPI.Extensions
 {
@@ -32,13 +34,38 @@ namespace Hum.WebAPI.Extensions
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-    
-            return context.Response.WriteAsync(new 
+            context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+            
+            HumAppError apperror = exception as HumAppError;
+            if (apperror != null)
             {
-                StatusCode = context.Response.StatusCode,
-                Message = "Internal Server Error from the custom middleware."
-            }.ToString());
+
+                switch (apperror.Type)
+                {
+                    case HumAppErrorType.RestrictedAccess:
+                        context.Response.StatusCode = (int) HttpStatusCode.Forbidden;
+                        break;
+                    case HumAppErrorType.Unauthorized:
+                        context.Response.StatusCode = (int) HttpStatusCode.Unauthorized;
+                        break;
+                    case HumAppErrorType.Unexpected:
+                        context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+                        break;
+                    case HumAppErrorType.Validation:
+                        context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+                        break;
+                }
+
+                if (!string.IsNullOrWhiteSpace(apperror.Message))
+                    return context.Response.WriteAsync(JsonConvert.SerializeObject(new 
+                    {
+                        Message = apperror.Message
+                    }));
+                else
+                    return context.Response.WriteAsync(string.Empty);
+            }
+            else
+                return context.Response.WriteAsync(string.Empty);
         }
     }
 }
