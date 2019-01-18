@@ -3,6 +3,8 @@ using System.Linq;
 using System.Collections.Generic;
 using Hum.Modules.DomainObjects;
 using Hum.Common.DTOs;
+using Hum.Common.Utility;
+using System.Threading.Tasks;
 
 namespace Hum.Modules.Rules
 {
@@ -117,8 +119,16 @@ namespace Hum.Modules.Rules
             return new TaskItemDTO();
         }
 
-        public TaskItemDTO SaveTask(TaskItemDTO savetask)
+        public async Task<TaskItemDTO> SaveTaskAsync(TaskItemDTO savetask)
         {
+            // if (string.IsNullOrWhiteSpace(savetask.Title))
+            //     throw new HumAppError(HummAppErrorType.Validation, "TASK TITLE CANNOT BE EMPTY");
+
+            // using (var ctx = new HumDataContext())
+            // {
+
+            // }
+
             // using (var context = new HumDataContext())
             // {
             //     using (var trans = context.Database.BeginTransaction())

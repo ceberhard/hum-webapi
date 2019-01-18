@@ -8,8 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Hum.WebAPI.Extensions;
 
-namespace hum_webapi
+namespace Hum.WebAPI
 {
     public class Startup
     {
@@ -33,6 +34,9 @@ namespace hum_webapi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // app.ConfigureExceptionHandler();
+            app.ConfigureCustomExceptionMiddleware();
 
             app.UseMvc();
         }

@@ -5,17 +5,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Hum.Common.DTOs;
 using Hum.Modules.Rules;
+using Hum.Common.Utility;
 
 namespace Hum.WebAPI.Controllers
 {
-    public class TaskController : Controller
+    public class TaskController : BaseController
     {
         [HttpGet]
         [Route("api/task")]
         public IActionResult GetTasks()
         {
-            var svc = new TaskService();
-            return Ok(svc.GetTaskItems());
+            return Ok(base.TaskService.GetTaskItems());
         }
 
         [HttpGet]
@@ -28,10 +28,12 @@ namespace Hum.WebAPI.Controllers
 
         [HttpPut]
         [Route("api/task")]
-        public IActionResult SaveTask([FromBody] TaskItemDTO savetask)
+        public async Task<IActionResult> SaveTask([FromBody] TaskItemDTO savetask)
         {
-            var svc = new TaskService();
-            return Ok(svc.SaveTask(savetask));
+            throw new Exception("Chris Test");
+
+            // return Ok(base.TaskService.SaveTask(savetask));
+            return Ok();
         }
 
         [HttpPut]

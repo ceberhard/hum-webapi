@@ -5,7 +5,7 @@ using Hum.Common.DTOs;
 
 namespace Hum.Modules.DomainObjects
 {
-    public enum TaskStatus
+    public enum TaskItemStatus
     {
         BACKLOG = 1,
         WIP = 2,
@@ -26,7 +26,7 @@ namespace Hum.Modules.DomainObjects
 
         [Column("task_status_id")]
         [Required]
-        public TaskStatus TaskStatus {get;set;}
+        public TaskItemStatus TaskStatus {get;set;}
 
         [Column("status_dttm")]
         [Required]
