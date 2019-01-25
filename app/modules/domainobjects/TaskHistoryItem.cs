@@ -7,10 +7,12 @@ namespace Hum.Modules.DomainObjects
 {
     public enum TaskItemStatus
     {
-        BACKLOG = 1,
+        Backlog = 1,
         WIP = 2,
-        QA = 3,
-        COMPLETE = 4
+        FollowUp = 3,
+        Complete = 4,
+        Archive = 5,
+        Cancelled = 6
     }
 
     [Table("task_history")]

@@ -35,7 +35,6 @@ namespace Hum.WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            // app.ConfigureExceptionHandler();
             app.ConfigureCustomExceptionMiddleware();
 
             app.UseMvc();

@@ -30,37 +30,7 @@ namespace Hum.WebAPI.Controllers
         [Route("api/task")]
         public async Task<IActionResult> SaveTask([FromBody] TaskItemDTO savetask)
         {
-            throw new HumAppError(HumAppErrorType.Validation, "Chris Test Validation");
-
-            // return Ok(base.TaskService.SaveTask(savetask));
-            return Ok();
-        }
-
-        [HttpPut]
-        [Route("api/task/{taskid}/{taskstatus}")]
-        public IActionResult UpdateTaskStatus(int taskid, string taskstatus)
-        {
-            // DomainObjects.TaskStatus status;
-            // if (Enum.TryParse(taskstatus.ToUpper(), out status))
-            // {
-            //     var svc = new TaskService();
-            //     return Ok(svc.UpdateTaskStatus(taskid, status));
-            // }
-            // else
-            //     return StatusCode(500, new { message = $"Invalid Status: {taskstatus.ToUpper()}" });
-            return Ok();
-        }
-
-        [HttpDelete]
-        [Route("api/task/{taskid}")]
-        public IActionResult DeleteTask(int taskid)
-        {
-            var svc = new TaskService();
-            bool success = svc.DeleteTaskItem(taskid);
-            if (success)
-                return Ok(new { message = $"Task Deleted: {taskid}" });
-            else
-                return StatusCode(500, new { message = "Task Delete Failed" });
+            return Ok(await base.TaskService.SaveTaskAsync(savetask));
         }
     }
 }

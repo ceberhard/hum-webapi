@@ -11,7 +11,7 @@ namespace Hum.Modules.DomainObjects
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=../hum.db");
+            optionsBuilder.UseSqlite("Data Source=../../hum.db");
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

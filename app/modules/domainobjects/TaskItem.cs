@@ -10,6 +10,11 @@ namespace Hum.Modules.DomainObjects
     [Table("task_item")]
     public class TaskItem
     {
+        public TaskItem()
+        {
+            this.TaskHistory = new List<TaskHistoryItem>();
+        }
+
         [Column("id")]
         [Required]
         public int Id {get;set;}
@@ -27,16 +32,45 @@ namespace Hum.Modules.DomainObjects
 
         public TaskItemDTO ExportDTO()
         {
-            return new TaskItemDTO
+            var t = new TaskItemDTO
             {
                 Id = this.Id,
                 Title = this.Title,
-                Description = this.Description,
-                History = this.TaskHistory
-                    .OrderBy(x => x.StatusDate)
-                    .Select(x => x.ExportDTO())
-                    .ToArray()
+                Description = this.Description
             };
+
+            if (this.TaskHistory.Count > 0)
+            {
+                TaskHistoryItem lateststatus = this.TaskHistory
+                    .OrderByDescending(th => th.StatusDate)
+                    .FirstOrDefault();
+                t.Status = lateststatus.TaskStatus.ToString();
+                t.LastUpdated = lateststatus.StatusDate.ToString("0:s");
+            }
+
+            return t;
+        }
+
+        public void ImportDTO(TaskItemDTO taskitemdto)
+        {
+            this.Title = taskitemdto.Title;
+            this.Description = taskitemdto.Description;
+
+            if (this.TaskHistory.Count == 0)
+            {
+                this.TaskHistory.Add(new TaskHistoryItem {
+                    TaskStatus = TaskItemStatus.Backlog,
+                    StatusDate = System.DateTime.Now
+                });
+            }
+            else
+            {
+                TaskItemStatus newstatus = (TaskItemStatus) System.Enum.Parse(typeof(TaskItemStatus), taskitemdto.Status, true);
+                this.TaskHistory.Add(new TaskHistoryItem {
+                    TaskStatus = newstatus,
+                    StatusDate = System.DateTime.Now
+                });
+            }
         }
     }
 }

@@ -15,8 +15,11 @@ namespace Hum.Common.DTOs
         [DataMember(Order = 3, Name = "description")]
         public string Description {get;set;}
 
-        [DataMember(Order = 4, Name = "history")]
-        public TaskHistoryItemDTO[] History {get;set;}
+        [DataMember(Order = 4, Name = "status", EmitDefaultValue = false)]
+        public string Status { get; set; }
+
+        [DataMember(Order = 5, Name = "lastupdated", EmitDefaultValue = false)]
+        public string LastUpdated { get; set; }
     }
 }
 
