@@ -45,7 +45,7 @@ namespace Hum.Modules.DomainObjects
                     .OrderByDescending(th => th.StatusDate)
                     .FirstOrDefault();
                 t.Status = lateststatus.TaskStatus.ToString();
-                t.LastUpdated = lateststatus.StatusDate.ToString("0:s");
+                t.LastUpdated = lateststatus.StatusDate.ToString("MM/dd/yyyy h:mm:ss tt");
             }
 
             return t;

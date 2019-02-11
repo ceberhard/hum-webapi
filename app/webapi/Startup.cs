@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Hum.WebAPI.Extensions;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 
 namespace Hum.WebAPI
 {
@@ -24,7 +26,17 @@ namespace Hum.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(o => o.AddPolicy("HumAPIPolicy", builder => 
+            {
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+            }));
+
             services.AddMvc();
+
+            services.Configure<MvcOptions>(options => 
+            {
+                options.Filters.Add(new CorsAuthorizationFilterFactory("HumAPIPolicy"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +48,8 @@ namespace Hum.WebAPI
             }
 
             app.ConfigureCustomExceptionMiddleware();
+
+            app.UseCors("HumAPIPolicy");
 
             app.UseMvc();
         }

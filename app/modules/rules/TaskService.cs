@@ -11,62 +11,17 @@ namespace Hum.Modules.Rules
 {
     public class TaskService
     {
-        public bool DeleteTaskItem(int taskid)
+        public async Task<List<TaskItemDTO>> GetTaskItemsAsync(int taskid = default(int))
         {
-            try
+            using (var ctx = new HumDataContext())
             {
-                using (var context = new HumDataContext())
-                {
-                    TaskItem task = context.TaskItem.Where(t => t.Id == taskid).FirstOrDefault();
-                    if (task == null)
-                        throw new Exception($"Unable to Find Task ID: {taskid}");
-                    context.TaskItem.Remove(task);
-                    context.SaveChanges();
-                    return true;
-                }
-            }
-            catch (System.Exception err)
-            {
-                throw err;
-            }
-        }
+                var tq = ctx.TaskItem.Include(t => t.TaskHistory).Select(t => t);
+                if (taskid != default(int))
+                    tq = tq.Where(t => t.Id == taskid);
 
-        public TaskItemDTO GetTaskItem(int taskid)
-        {
-            // try
-            // {
-            //     using (var context = new HumDataContext())
-            //     {
-            //         TaskItem task = context.TaskItem
-            //             .Where(t => t.Id == taskid)
-            //             .Include(x => x.TaskHistory)
-            //             .FirstOrDefault();
-            //         return task?.ExportDTO();
-            //     }
-            // }
-            // catch (System.Exception err)
-            // {
-            //     throw err;
-            // }
-            return new TaskItemDTO();
-        }
-
-        public TaskItemDTO[] GetTaskItems()
-        {
-            // try
-            // {
-            //     using (var context = new HumDataContext())
-            //     {
-            //         return context.TaskItem
-            //             .Include(x => x.TaskHistory)
-            //             .Select(t => t.ExportDTO()).ToArray();
-            //     }
-            // }
-            // catch (System.Exception err)
-            // {
-            //     throw err;
-            // }
-            return new TaskItemDTO[0];
+                List<TaskItem> results = await tq.ToListAsync();
+                return results.Select(t => t.ExportDTO()).ToList();
+            }
         }
 
         public TaskItemDTO UpdateTaskStatus(int taskid, TaskStatus newstatus)
@@ -219,7 +174,7 @@ namespace Hum.Modules.Rules
                 {
                     TaskHistoryItem lateststatus = existingitem.TaskHistory.OrderByDescending(th => th.StatusDate).FirstOrDefault();
                     if (!CheckStatusChange(lateststatus.TaskStatus, newstatus))
-                        return (false, $"Invalid Task Status Transition: {lateststatus.TaskStatus} > {newstatus}");
+                        return (false, $"Invalid Task Status Transition: {lateststatus.TaskStatus} -> {newstatus}");
                 }
                 else
                     return (false, $"Invalid Task Status: {dto.Status}");

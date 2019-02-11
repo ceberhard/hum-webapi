@@ -12,23 +12,16 @@ namespace Hum.WebAPI.Controllers
     public class TaskController : BaseController
     {
         [HttpGet]
-        [Route("api/task")]
-        public IActionResult GetTasks()
+        [Route("api/v1/task")]
+        [Route("api/v1/task/{taskid}")]
+        public async Task<IActionResult> GetTaskItemsAsync(int taskid = default(int))
         {
-            return Ok(base.TaskService.GetTaskItems());
-        }
-
-        [HttpGet]
-        [Route("api/task/{taskid}")]
-        public IActionResult GetTask(int taskid)
-        {
-            var svc = new TaskService();
-            return Ok(svc.GetTaskItem(taskid));
+            return Ok(await base.TaskService.GetTaskItemsAsync(taskid));
         }
 
         [HttpPut]
-        [Route("api/task")]
-        public async Task<IActionResult> SaveTask([FromBody] TaskItemDTO savetask)
+        [Route("api/v1/task")]
+        public async Task<IActionResult> SaveTaskAsync([FromBody] TaskItemDTO savetask)
         {
             return Ok(await base.TaskService.SaveTaskAsync(savetask));
         }
