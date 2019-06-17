@@ -36,14 +36,5 @@ namespace Hum.Modules.DomainObjects
 
         [ForeignKey("TaskId")]
         public TaskItem Task {get;set;}
-
-        public TaskHistoryItemDTO ExportDTO()
-        {
-            return new TaskHistoryItemDTO
-            {
-                Status = this.TaskStatus.ToString(),
-                HistoryDate = this.StatusDate.ToString()
-            };
-        }
     }
 }

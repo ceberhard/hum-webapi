@@ -25,5 +25,12 @@ namespace Hum.WebAPI.Controllers
         {
             return Ok(await base.TaskService.SaveTaskAsync(savetask));
         }
+
+        [HttpGet]
+        [Route("api/v1/taskstatus")]
+        public async Task<IActionResult> GetTaskStatusListAsync()
+        {
+            return Ok(await base.TaskService.GetTaskStatuses());
+        }
     }
 }
