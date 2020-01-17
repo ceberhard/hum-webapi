@@ -1,9 +1,9 @@
 using System;
 using System.Net;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Hum.Common.Utility;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 
 namespace Hum.WebAPI.Extensions
 {
@@ -57,7 +57,7 @@ namespace Hum.WebAPI.Extensions
                 }
 
                 if (!string.IsNullOrWhiteSpace(apperror.Message))
-                    return context.Response.WriteAsync(JsonConvert.SerializeObject(new 
+                    return context.Response.WriteAsync(JsonSerializer.Serialize(new 
                     {
                         Message = apperror.Message
                     }));
