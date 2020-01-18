@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Hum.WebAPI.Extensions;
 using Microsoft.Extensions.Hosting;
+using Hum.Modules.Rules;
 
 namespace Hum.WebAPI
 {
@@ -29,6 +30,8 @@ namespace Hum.WebAPI
             }));
 
             services.AddMvc();
+
+            services.AddTransient<TaskService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
